@@ -5,17 +5,14 @@ def sidebar():
     with st.sidebar:
 
         st.markdown("---")
-        st.markdown("# About")
+        st.markdown("# Questions")
         st.markdown(
-            "📖KnowledgeGPT allows you to ask questions about your "
-            "documents and get accurate answers with instant citations. "
+            "What is mentioned as the cause for the distance between people last year?"
+            "What is described as prevailing over tyranny in the speech?"
+            "Which leader is accused of misjudging the global response to their actions?"
+            "Which country and its people are commended for their resistance and bravery?"
+            "How did President Biden describe the American Rescue Plan?"
+            "What were the plans to combat inflation?"
+            "What did President Biden propose regarding energy and child care costs in his 2022 State of the Union Address?"
         )
-        st.markdown(
-            "This tool is a work in progress. "
-            "You can contribute to the project on [GitHub](https://github.com/mmz-001/knowledge_gpt) "  # noqa: E501
-            "with your feedback and suggestions💡"
-        )
-        st.markdown("Made by [mmz_001](https://twitter.com/mm_sasmitha)")
         st.markdown("---")
-
-        faq()

@@ -3,14 +3,20 @@ from llama_index import VectorStoreIndex, ServiceContext, Document
 from llama_index.llms import OpenAI
 import openai
 from llama_index import SimpleDirectoryReader
+from components.sidebar import sidebar
+
+MODEL_LIST = ["gpt-3.5-turbo", "gpt-4"]
+sidebar()
 
 st.set_page_config(page_title="HanwhaGPT", page_icon="📁", layout="centered", initial_sidebar_state="auto", menu_items=None)
-# openai.api_key = st.secrets.openai_key
-openai.api_key = "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"
-# openai.api_key = st.session_state.get("OPENAI_API_KEY")
+openai.api_key = st.secrets.openai_key
+
 st.title("HanwhaGPT")
 st.info("Built by [tylertaewook](https://tylertaewook.com) for Hanwha GIP AI Track's Case Study. View source code at [Github](https://github.com/tylertaewook/hanwha-ai-case-study)", icon="📃")
-         
+
+model: str = st.selectbox("Model", options=MODEL_LIST)
+
+
 if "messages" not in st.session_state.keys(): # Initialize the chat messages history
     st.session_state.messages = [
         {"role": "assistant", "content": "Ask me a question about President Biden's State of the Union address in 2022!"}
@@ -21,7 +27,7 @@ def load_data():
     with st.spinner(text="Loading and indexing the docs – hang tight! This should take 1-2 minutes."):
         reader = SimpleDirectoryReader(input_dir="./data", recursive=True)
         docs = reader.load_data()
-        service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-4", temperature=0.5, system_prompt="You are an expert on the the content of President Biden's State of the Union address in 2022. You are aware of the United States' position on Russia's invasion of Ukraine, as well as the economic achievements of the past year and future plans. Assume that all questions are related to the President Biden's speech. Keep your answers based on facts – do not hallucinate features. When asked unrelated question, refuse to answer."))
+        service_context = ServiceContext.from_defaults(llm=OpenAI(model=model, temperature=0.5, system_prompt="You are an expert on the the content of President Biden's State of the Union address in 2022. You are aware of the United States' position on Russia's invasion of Ukraine, as well as the economic achievements of the past year and future plans. Assume that all questions are related to the President Biden's speech. Keep your answers based on facts – do not hallucinate features. When asked unrelated question, refuse to answer."))
         index = VectorStoreIndex.from_documents(docs, service_context=service_context)
         return index
 
