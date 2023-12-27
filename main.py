@@ -7,7 +7,6 @@ from components.sidebar import sidebar
 
 st.set_page_config(page_title="HanwhaGPT", page_icon="📁", layout="centered", initial_sidebar_state="auto", menu_items=None)
 MODEL_LIST = ["gpt-3.5-turbo", "gpt-4"]
-sidebar()
 
 openai.api_key = st.secrets.openai_key
 
@@ -37,6 +36,15 @@ if "chat_engine" not in st.session_state.keys(): # Initialize the chat engine
         st.session_state.chat_engine = index.as_chat_engine(chat_mode="condense_question", verbose=True)
 
 if prompt := st.chat_input("Your question"): # Prompt for user input and save to chat history
+    st.session_state.messages.append({"role": "user", "content": prompt})
+
+if prompt := st.selectbox("Questions from Instructions", ("What is mentioned as the cause for the distance between people last year?",
+            "What is described as prevailing over tyranny in the speech?",
+            "Which leader is accused of misjudging the global response to their actions?",
+            "Which country and its people are commended for their resistance and bravery?",
+            "How did President Biden describe the American Rescue Plan?",
+            "What were the plans to combat inflation?",
+            "What did President Biden propose regarding energy and child care costs in his 2022 State of the Union Address?")):
     st.session_state.messages.append({"role": "user", "content": prompt})
 
 for message in st.session_state.messages: # Display the prior chat messages
