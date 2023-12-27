@@ -5,10 +5,10 @@ import openai
 from llama_index import SimpleDirectoryReader
 from components.sidebar import sidebar
 
+st.set_page_config(page_title="HanwhaGPT", page_icon="📁", layout="centered", initial_sidebar_state="auto", menu_items=None)
 MODEL_LIST = ["gpt-3.5-turbo", "gpt-4"]
 sidebar()
 
-st.set_page_config(page_title="HanwhaGPT", page_icon="📁", layout="centered", initial_sidebar_state="auto", menu_items=None)
 openai.api_key = st.secrets.openai_key
 
 st.title("HanwhaGPT")
